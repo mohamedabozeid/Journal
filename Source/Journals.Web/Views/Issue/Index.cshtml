@@ -1,0 +1,39 @@
+﻿@model Journals.Model.JournalIssuresListViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Journal Issues.</h2>
+<table class="table table-condensed table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>File</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Issues)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink(item.FileName, "GetFile", new { id = Journals.Web.Helpers.CryptoEngine.Instance.Encrypt(item.IssueId.ToString()) }, new { target = "_blank" })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = Journals.Web.Helpers.CryptoEngine.Instance.Encrypt(item.IssueId.ToString()) }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = Journals.Web.Helpers.CryptoEngine.Instance.Encrypt(item.IssueId.ToString()) })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.ActionLink("Create New", "Create",  new {id = Journals.Web.Helpers.CryptoEngine.Instance.Encrypt(Model.JournalId.ToString())});
