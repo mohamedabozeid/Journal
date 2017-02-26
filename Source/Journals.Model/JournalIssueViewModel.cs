@@ -12,7 +12,7 @@ namespace Journals.Model
     public class JournalIssueViewModel
     {
         public int IssueId { get; set; }
-        public string JournalKey { get; set; }
+        public string Key { get; set; }
 
         public int JournalId { get; set; }
 

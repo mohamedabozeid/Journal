@@ -3,7 +3,10 @@
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    string issueKey = Journals.Web.Helpers.CryptoEngine.Instance.Encrypt(Model.IssueId.ToString());
+    string journalKey = Journals.Web.Helpers.CryptoEngine.Instance.Encrypt(Model.JournalId.ToString());
+  }
 <h2>Delete</h2>
 <div>
     <hr />
@@ -31,10 +34,10 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
+        @Html.Hidden("Key", issueKey);
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Index", new {id= journalKey })
         </div>
     }
 </div>

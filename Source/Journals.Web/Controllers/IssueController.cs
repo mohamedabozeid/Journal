@@ -1,4 +1,5 @@
-﻿using Journals.Model;
+﻿using Journals.Core;
+using Journals.Model;
 using Journals.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,11 @@ namespace Medico.Web.Controllers
 {
     public class IssueController : PublisherBaseController
     {
-
+        IJournalIssueService _service = null;
+        public IssueController(IJournalIssueService service)
+        {
+            _service = service;
+        }
 
         public ActionResult Index(string id)
         {
@@ -110,13 +115,20 @@ namespace Medico.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(JournalIssueViewModel model)
         {
+            int int_id = int.Parse(CryptoEngine.Instance.Decrypt(model.Key));
             if (ModelState.IsValid)
             {
-                string id = Request.Params["id"];
                 return RedirectToAction("Index", "Publisher");
             }
             else
-                return View(model);
+                return View(new JournalIssueViewModel()
+            {
+                JournalId = int_id,
+                FileName = "xxx",
+                IssueId = 1,
+                Title = "test xxx",
+                Description = "just for testing purposes"
+            });
         }
 
         public ActionResult GetFile(string id)

@@ -1,6 +1,10 @@
-﻿using Journals.Repository;
+﻿using Journals.Core;
+using Journals.Repository;
 using Journals.Web.Controllers;
 using Microsoft.Practices.Unity;
+using System;
+using System.Reflection;
+using System.Linq;
 
 namespace Journals.Web.IoC
 {
@@ -21,6 +25,10 @@ namespace Journals.Web.IoC
             _Instance.RegisterType<IJournalRepository, JournalRepository>(new HierarchicalLifetimeManager());
             _Instance.RegisterType<ISubscriptionRepository, SubscriptionRepository>(new HierarchicalLifetimeManager());
             _Instance.RegisterType<IStaticMembershipService, StaticMembershipService>(new HierarchicalLifetimeManager());
+             AppDomain.CurrentDomain.Load("Journal.Services");
+           // Type service = assembly.GetTypes().Where(t => t.FullName.Contains("JournalIssueService")).FirstOrDefault();
+            //Type service = Type.GetType("Journal.Services.JournalIssueService");
+            //_Instance.RegisterType(typeof(IJournalIssueService), service, new HierarchicalLifetimeManager());
             return _Instance;
         }
     }
