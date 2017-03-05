@@ -1,4 +1,5 @@
 ﻿using Journals.Core;
+using Journals.Core.Services;
 using Journals.Model;
 using Journals.Web.Helpers;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Medico.Web.Controllers
+namespace Journals.Web.Controllers
 {
     public class IssueController : PublisherBaseController
     {

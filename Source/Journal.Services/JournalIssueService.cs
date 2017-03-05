@@ -1,4 +1,5 @@
 ﻿using Journals.Core;
+using Journals.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

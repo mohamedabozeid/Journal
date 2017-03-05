@@ -1,6 +1,7 @@
 ﻿using DotNetOpenAuth.AspNet;
+using Journals.Core.DomainModels;
+using Journals.Core.Repository;
 using Journals.Model;
-using Journals.Repository.DataContext;
 using Microsoft.Web.WebPages.OAuth;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,13 @@ namespace Journals.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        IUserRepository _userRepo;
         //
         // GET: /Account/Login
+        public AccountController(IUserRepository userRepository)
+        {
+            _userRepo = userRepository;
+        }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string errorMessage = "")
@@ -268,25 +274,21 @@ namespace Journals.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                UserProfile user = _userRepo.GetUserByUserName(model.UserName);
+                // Check if user already exists
+                if (user == null)
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                        db.SaveChanges();
+                    // Insert name into the profile table
+                    _userRepo.AddUser(new UserProfile { UserName = model.UserName });
 
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+                    OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
+                    OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                    }
+                    return RedirectToLocal(returnUrl);
+                }
+                else
+                {
+                    ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using Journals.Model;
+﻿using Journals.Core.DomainModels;
+using Journals.Model;
 using System.Web;
 
 namespace Journals.Web.Helpers

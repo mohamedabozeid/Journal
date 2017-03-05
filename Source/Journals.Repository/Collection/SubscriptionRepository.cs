@@ -1,28 +1,32 @@
-﻿using Journals.Model;
+﻿using AutoMapper;
+using Journals.Core.DomainModels;
+using Journals.Core.Repository;
 using Journals.Repository.DataContext;
+using Journals.Repository.EntityModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Journals.Repository
+namespace Journals.Repository.Collection
 {
     public class SubscriptionRepository : RepositoryBase<JournalsContext>, ISubscriptionRepository
     {
         public List<Journal> GetAllJournals()
         {
+            List<Journal> result = null;
             try
             {
                 using (DataContext)
                 {
-                    var result = from a in DataContext.Journals
+                    var resultEntities = from a in DataContext.Journals
                                  where a.Title != null
                                  select new { a.Id, a.Title, a.Description, a.User, a.UserId, a.ModifiedDate, a.FileName };
 
-                    if (result == null)
+                    if (resultEntities == null)
                         return new List<Journal>();
 
-                    List<Journal> list = result.AsEnumerable()
-                                              .Select(f => new Journal
+                    List<JournalEntity> list = resultEntities.AsEnumerable()
+                                              .Select(f => new JournalEntity
                                               {
                                                   Id = f.Id,
                                                   Title = f.Title,
@@ -33,7 +37,7 @@ namespace Journals.Repository
                                                   FileName = f.FileName
                                               }).ToList();
 
-                    return list;
+                   return Mapper.Map<List<Journal>>(list);
                 }
             }
             catch (Exception e)
@@ -41,7 +45,7 @@ namespace Journals.Repository
                 OperationStatus.CreateFromException("Error fetching subscriptions: ", e); ;
             }
 
-            return new List<Journal>();
+            return result;
         }
 
         public List<Subscription> GetJournalsForSubscriber(int userId)
@@ -52,12 +56,12 @@ namespace Journals.Repository
                 {
                     var subscriptions = DataContext.Subscriptions.Where(u => u.UserId == userId);
                     if (subscriptions != null)
-                        return subscriptions.ToList();
+                        return Mapper.Map<List<Subscription>>(subscriptions.ToList());
                 }
             }
             catch (Exception e)
             {
-                OperationStatus.CreateFromException("Error fetching subscriptions: ", e); ;
+                OperationStatus.CreateFromException("Error fetching subscriptions: ", e);
             }
 
             return new List<Subscription>();
@@ -71,7 +75,7 @@ namespace Journals.Repository
                 {
                     var subscriptions = DataContext.Subscriptions.Include("Journal").Where(u => u.User.UserName == userName);
                     if (subscriptions != null)
-                        return subscriptions.ToList();
+                         return Mapper.Map<List<Subscription>>(subscriptions.ToList());
                 }
             }
             catch (Exception e)
@@ -89,7 +93,7 @@ namespace Journals.Repository
             {
                 using (DataContext)
                 {
-                    Subscription s = new Subscription();
+                    SubscriptionEntity s = new SubscriptionEntity();
                     s.JournalId = journalId;
                     s.UserId = userId;
                     var j = DataContext.Subscriptions.Add(s);

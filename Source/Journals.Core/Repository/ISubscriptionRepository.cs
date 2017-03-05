@@ -1,7 +1,7 @@
-﻿using Journals.Model;
+﻿using Journals.Core.DomainModels;
 using System.Collections.Generic;
 
-namespace Journals.Repository
+namespace Journals.Core.Repository
 {
     public interface ISubscriptionRepository
     {

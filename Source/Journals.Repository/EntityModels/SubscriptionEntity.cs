@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Journals.Model
+namespace Journals.Repository.EntityModels
 {
-    public class Subscription
+    public class SubscriptionEntity
     {
         public int Id { get; set; }
 
         [ForeignKey("JournalId")]
-        public Journal Journal { get; set; }
+        public JournalEntity Journal { get; set; }
 
         public int JournalId { get; set; }
 
         [ForeignKey("UserId")]
-        public UserProfile User { get; set; }
+        public UserProfileEntity User { get; set; }
 
         public int UserId { get; set; }
     }

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Journals.Core;
+using Journals.Core.DomainModels;
 using Journals.Model;
 using Journals.Repository;
 using Journals.Web.Filters;
 using Journals.Web.Helpers;
-using Medico.Web.Controllers;
+using Journals.Web.Controllers;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;

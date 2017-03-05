@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Medico.Web.Controllers
+namespace Journals.Web.Controllers
 {
     [AuthorizeRedirect(Roles = "Publisher")]
     public class PublisherBaseController : BaseController

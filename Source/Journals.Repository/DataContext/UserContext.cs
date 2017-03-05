@@ -1,4 +1,4 @@
-﻿using Journals.Model;
+﻿using Journals.Repository.EntityModels;
 using System.Data.Entity;
 
 namespace Journals.Repository.DataContext
@@ -10,6 +10,6 @@ namespace Journals.Repository.DataContext
         {
         }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserProfileEntity> UserProfiles { get; set; }
     }
 }

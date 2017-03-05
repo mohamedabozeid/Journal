@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Journals.Model
+namespace Journals.Repository.EntityModels
 {
     [Table("UserProfile")]
-    public class UserProfile
+    public class UserProfileEntity
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]

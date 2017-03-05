@@ -1,7 +1,7 @@
-﻿using Journals.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Journals.Core.DomainModels;
 
-namespace Journals.Repository
+namespace Journals.Core
 {
     public interface IJournalRepository
     {

@@ -1,5 +1,4 @@
-﻿using Journals.Model;
-using Medico.Model;
+﻿using Journals.Repository.EntityModels;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -13,9 +12,9 @@ namespace Journals.Repository.DataContext
         {
         }
 
-        public DbSet<Journal> Journals { get; set; }
-        public DbSet<Subscription> Subscriptions { get; set; }
-        public DbSet<JournalIssue> JournalIssues { get; set; }
+        public DbSet<JournalEntity> Journals { get; set; }
+        public DbSet<SubscriptionEntity> Subscriptions { get; set; }
+        public DbSet<JournalIssueEntity> JournalIssues { get; set; }
         public bool IsDisposed { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,15 +25,15 @@ namespace Journals.Repository.DataContext
             //    .HasMany(j => j.Issues)
             //    .WithOptional(i => i.Journal)
             //    .HasForeignKey(i => i.JournalId);
-            modelBuilder.Entity<Subscription>().ToTable("Subscriptions");
+            modelBuilder.Entity<SubscriptionEntity>().ToTable("Subscriptions");
 
             //JournalIssues
-            modelBuilder.Entity<JournalIssue>().ToTable("JournalIssues")
+            modelBuilder.Entity<JournalIssueEntity>().ToTable("JournalIssues")
                 .HasKey(c => c.Id)
                 .Property(c => c.Title).IsRequired();
-            modelBuilder.Entity<JournalIssue>().Property(c=>c.Description).IsRequired();
-            modelBuilder.Entity<JournalIssue>().Property(c => c.Description).HasColumnAnnotation("DataType", DataType.MultilineText);
-            modelBuilder.Entity<JournalIssue>()
+            modelBuilder.Entity<JournalIssueEntity>().Property(c=>c.Description).IsRequired();
+            modelBuilder.Entity<JournalIssueEntity>().Property(c => c.Description).HasColumnAnnotation("DataType", DataType.MultilineText);
+            modelBuilder.Entity<JournalIssueEntity>()
                 .HasRequired(i => i.Journal)
                 .WithMany(j => j.Issues);
                 

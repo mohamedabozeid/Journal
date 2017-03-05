@@ -1,4 +1,4 @@
-﻿using Medico.Model.Validation;
+﻿using Journals.Model.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

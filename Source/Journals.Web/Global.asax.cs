@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Journals.Core.DomainModels;
 using Journals.Model;
-using Journals.Repository.DataContext;
 using Journals.Web.IoC;
 using System;
 using System.Data.Entity;
@@ -18,13 +18,13 @@ namespace Journals.Web
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static SimpleMembershipInitializer _initializer;
+        //private static SimpleMembershipInitializer _initializer;
         private static object _initializerLock = new object();
         private static bool _isInitialized;
 
         protected void Application_Start()
         {
-            Database.SetInitializer<JournalsContext>(new ModelChangedInitializer());
+            
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -44,8 +44,8 @@ namespace Journals.Web
 
             Mapper.CreateMap<Journal, SubscriptionViewModel>();
             Mapper.CreateMap<SubscriptionViewModel, Journal>();
-
-            LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
+            
+           // LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
         }
 
         protected void Application_Error(object sender, EventArgs e)

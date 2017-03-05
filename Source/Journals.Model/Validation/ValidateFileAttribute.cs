@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Medico.Model.Validation
+namespace Journals.Model.Validation
 {
 
     public class ValidateFileAttribute : ValidationAttribute

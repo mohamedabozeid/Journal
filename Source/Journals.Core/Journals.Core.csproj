@@ -40,9 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IJournalIssueService.cs" />
+    <Compile Include="DomainModels\Journal.cs" />
+    <Compile Include="DomainModels\JournalIssue.cs" />
+    <Compile Include="DomainModels\OperationStatus.cs" />
+    <Compile Include="DomainModels\Subscription.cs" />
+    <Compile Include="DomainModels\UserProfile.cs" />
+    <Compile Include="IDisposedTracker.cs" />
+    <Compile Include="Repository\IModelChangedInitializer.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
+    <Compile Include="Services\IBootstrapperService.cs" />
+    <Compile Include="Services\IJournalIssueService.cs" />
+    <Compile Include="Repository\IJournalRepository.cs" />
+    <Compile Include="Repository\ISubscriptionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

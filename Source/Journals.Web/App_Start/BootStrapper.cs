@@ -1,19 +1,23 @@
-﻿using System.Data.Entity;
+﻿using Journals.Core.Services;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
 using WebMatrix.WebData;
 
-namespace Journals.Repository.DataContext
+namespace Journals.Web
 {
-    public class ModelChangedInitializer : DropCreateDatabaseIfModelChanges<JournalsContext>
+    public class BootStrapper 
     {
-        protected override void Seed(JournalsContext context)
+
+        IBootstrapperService _service;
+        public BootStrapper(IBootstrapperService service)
         {
-            DataInitializer.Initialize(context);
+            _service = service;
+            _service.ModelChanged += DBModelChanged;
+        }
 
-            using (var context1 = new UsersContext())
-                context1.UserProfiles.Find(1);
-
+        private void DBModelChanged(object sender, System.EventArgs e)
+        {
             if (!WebSecurity.Initialized)
                 WebSecurity.InitializeDatabaseConnection("JournalsDB", "UserProfile", "UserId", "UserName", autoCreateTables: true);
 
@@ -83,5 +87,6 @@ namespace Journals.Repository.DataContext
                 roles.AddUsersToRoles(new[] { "harold" }, new[] { "Publisher" });
             }
         }
+
     }
 }

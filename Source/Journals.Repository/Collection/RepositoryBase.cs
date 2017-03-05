@@ -1,10 +1,10 @@
-﻿using Journals.Model;
+﻿using Journals.Core.DomainModels;
 using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Journals.Repository
+namespace Journals.Repository.Collection
 {
     public class RepositoryBase<T> : IDisposable where T : DbContext, IDisposedTracker, new()
     {
